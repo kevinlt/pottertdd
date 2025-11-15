@@ -4,7 +4,7 @@ class Cart:
 
     def get_bill(self):
         if self._books > 0:
-            return 8
+            return self._books * 8
         return 0
 
     def add_a_book(self):

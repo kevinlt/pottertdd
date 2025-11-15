@@ -11,3 +11,9 @@ class TestBuyingBooks:
         cart = Cart()
         cart.add_a_book()
         assert cart.get_bill() == 8
+
+    def test_should_return_16_if_cart_has_2_books(self):
+        cart = Cart()
+        cart.add_a_book()
+        cart.add_a_book()
+        assert cart.get_bill() == 16
