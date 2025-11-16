@@ -1,11 +1,22 @@
+from src.purchased_book import PurchasedBook
+
+
 class Cart:
 
-    _books = 0
+    _books: [PurchasedBook] = []
+
+    def __init__(self):
+        self._books = []
 
     def get_bill(self):
-        if self._books > 0:
-            return self._books * 8
-        return 0
+        bill = 0
+        if self._books:
+            for book in self._books:
+                bill += book.price * book.quantity
+            different_books = len(self._books)
+            if different_books > 1:
+                bill = bill * 0.95
+        return bill
 
-    def add_a_book(self):
-        self._books += 1
+    def add_a_book(self, purchased_book: PurchasedBook):
+        self._books.append(purchased_book)
