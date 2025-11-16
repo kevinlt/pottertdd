@@ -14,8 +14,10 @@ class Cart:
             for book in self._books:
                 bill += book.price * book.quantity
             different_books = len(self._books)
-            if different_books > 1:
+            if different_books == 2:
                 bill = bill * 0.95
+            elif different_books == 3:
+                bill = bill * 0.9
         return bill
 
     def add_a_book(self, purchased_book: PurchasedBook):

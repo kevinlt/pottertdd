@@ -22,8 +22,14 @@ class TestBuyingBooks:
         cart = Cart()
         cart.add_a_book(BookBuilder().of_id(1).build())
         cart.add_a_book(BookBuilder().of_id(2).build())
-
         assert cart.get_bill() == 16 * 0.95
+
+    def test_should_return_10_percent_discount_when_cart_has_3_different_books(self):
+        cart = Cart()
+        cart.add_a_book(BookBuilder().of_id(1).build())
+        cart.add_a_book(BookBuilder().of_id(2).build())
+        cart.add_a_book(BookBuilder().of_id(3).build())
+        assert cart.get_bill() == 24 * 0.9
 
 class BookBuilder:
 
