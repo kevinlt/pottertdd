@@ -20,11 +20,20 @@ class Cart:
     def get_bill(self):
         bill = 0
         if self._books:
-            for book in self._books:
-                bill += book.price * book.quantity
-            different_books = len(self._books)
-            bill = bill * self._discounts[different_books]
+            for _ in reversed(range(1,len(self._discounts)+1)):
+                books = self.get_books_for_quantity(_)
+                if books:
+                    bill += self.get_discount_bill(books)
         return bill
+
+    def get_discount_bill(self, books: list[PurchasedBook]) -> float:
+        discount_bill = 0
+        for book in books:
+            discount_bill += book.price
+        return discount_bill * self._discounts[len(books)]
+
+    def get_books_for_quantity(self, quantity: int) -> list[PurchasedBook]:
+        return list(filter(lambda book: book.quantity >= quantity, self._books))
 
     def add_a_book(self, purchased_book: PurchasedBook):
         self._books.append(purchased_book)
