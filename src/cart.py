@@ -4,6 +4,13 @@ from src.purchased_book import PurchasedBook
 class Cart:
 
     _books: [PurchasedBook] = []
+    _discounts = {
+        1: 1,
+        2: 0.95,
+        3: 0.9,
+        4: 0.85,
+        5: 0.8
+    }
 
     def __init__(self):
         self._books = []
@@ -14,10 +21,7 @@ class Cart:
             for book in self._books:
                 bill += book.price * book.quantity
             different_books = len(self._books)
-            if different_books == 2:
-                bill = bill * 0.95
-            elif different_books == 3:
-                bill = bill * 0.9
+            bill = bill * self._discounts[different_books]
         return bill
 
     def add_a_book(self, purchased_book: PurchasedBook):

@@ -4,6 +4,14 @@ from src.cart import Cart
 
 class TestBuyingBooks:
 
+    _discount_dataset = [
+        (1, 1, 8),
+        (1, 2, 8 * 2 * 0.95),
+        (1, 3, 8 * 3 * 0.9),
+        (1, 4, 8 * 4 * 0.85),
+        (1, 5, 8 * 5 * 0.8)
+    ]
+
     def test_should_return_0_if_no_books_to_buy(self):
         cart = Cart()
         assert cart.get_bill() == 0
@@ -18,18 +26,11 @@ class TestBuyingBooks:
         cart.add_a_book(BookBuilder().of_id(1).quantity(2).build())
         assert cart.get_bill() == 16
 
-    def test_should_return_5_percent_discount_when_cart_has_2_different_books(self):
+    def test_should_apply_discount_when_cart_has_different_books(self):
         cart = Cart()
-        cart.add_a_book(BookBuilder().of_id(1).build())
-        cart.add_a_book(BookBuilder().of_id(2).build())
-        assert cart.get_bill() == 16 * 0.95
-
-    def test_should_return_10_percent_discount_when_cart_has_3_different_books(self):
-        cart = Cart()
-        cart.add_a_book(BookBuilder().of_id(1).build())
-        cart.add_a_book(BookBuilder().of_id(2).build())
-        cart.add_a_book(BookBuilder().of_id(3).build())
-        assert cart.get_bill() == 24 * 0.9
+        for book_quantity, different_books, expected_bill in self._discount_dataset:
+            cart.add_a_book(BookBuilder().of_id(1).quantity(book_quantity).build())
+            assert cart.get_bill() == expected_bill
 
 class BookBuilder:
 
