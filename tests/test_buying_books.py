@@ -40,6 +40,30 @@ class TestBuyingBooks:
         cart.add_a_book(BookBuilder().of_id(2).quantity(1).build())
         assert cart.get_bill() == 2 * 8 * 0.95 + 1 * 8
 
+    def test_should_apply_discount_only_on_max_batch_available(self):
+        cart = Cart()
+        cart.add_a_book(BookBuilder().of_id(1).quantity(1).build())
+        cart.add_a_book(BookBuilder().of_id(2).quantity(1).build())
+        cart.add_a_book(BookBuilder().of_id(3).quantity(1).build())
+        cart.add_a_book(BookBuilder().of_id(4).quantity(1).build())
+        cart.add_a_book(BookBuilder().of_id(5).quantity(1).build())
+        cart.add_a_book(BookBuilder().of_id(6).quantity(1).build())
+        cart.add_a_book(BookBuilder().of_id(7).quantity(1).build())
+        cart.add_a_book(BookBuilder().of_id(8).quantity(1).build())
+        assert cart.get_bill() == 7 * 8 * 0.7 + 8
+
+    def test_should_apply_a_second_discount_if_batch_size_is_higher_than_upper_discount_batch_size(self):
+        cart = Cart()
+        cart.add_a_book(BookBuilder().of_id(1).quantity(1).build())
+        cart.add_a_book(BookBuilder().of_id(2).quantity(1).build())
+        cart.add_a_book(BookBuilder().of_id(3).quantity(1).build())
+        cart.add_a_book(BookBuilder().of_id(4).quantity(1).build())
+        cart.add_a_book(BookBuilder().of_id(5).quantity(1).build())
+        cart.add_a_book(BookBuilder().of_id(6).quantity(1).build())
+        cart.add_a_book(BookBuilder().of_id(7).quantity(1).build())
+        cart.add_a_book(BookBuilder().of_id(8).quantity(1).build())
+        cart.add_a_book(BookBuilder().of_id(9).quantity(1).build())
+        assert cart.get_bill() == 7 * 8 * 0.7 + 2 * 8 * 0.95
 class BookBuilder:
 
     _id: int = 0

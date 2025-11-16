@@ -28,9 +28,15 @@ class Cart:
 
     def get_discount_bill(self, books: list[PurchasedBook]) -> float:
         discount_bill = 0
-        for book in books:
-            discount_bill += book.price
-        return discount_bill * self._discounts[len(books)]
+        booksCopy = books.copy()
+        while booksCopy:
+            bill = 0
+            batch = booksCopy[:len(self._discounts)]
+            for book in batch:
+                bill += book.price
+                booksCopy.remove(book)
+            discount_bill += bill *self._discounts[len(batch)]
+        return discount_bill
 
     def get_books_for_quantity(self, quantity: int) -> list[PurchasedBook]:
         return list(filter(lambda book: book.quantity >= quantity, self._books))
