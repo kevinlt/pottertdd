@@ -35,7 +35,7 @@ class Cart:
             for book in batch:
                 bill += book.price
                 booksCopy.remove(book)
-            discount_bill += bill *self._discounts[len(batch)]
+            discount_bill += bill * self._discounts[len(batch)]
         return discount_bill
 
     def get_books_for_quantity(self, quantity: int) -> list[PurchasedBook]:
