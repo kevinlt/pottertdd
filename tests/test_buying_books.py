@@ -9,7 +9,9 @@ class TestBuyingBooks:
         (1, 2, 8 * 2 * 0.95),
         (1, 3, 8 * 3 * 0.9),
         (1, 4, 8 * 4 * 0.85),
-        (1, 5, 8 * 5 * 0.8)
+        (1, 5, 8 * 5 * 0.8),
+        (1, 6, 8 * 6 * 0.75),
+
     ]
 
     def test_should_return_0_if_no_books_to_buy(self):
